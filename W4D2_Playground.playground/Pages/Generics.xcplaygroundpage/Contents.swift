@@ -80,7 +80,7 @@ func findElementInArray<Element:Comparable>(array: [Element],toFind:Element) -> 
     return nil
 }
 
-findElementInArray(array: [1,5,2,4], toFind: 5)
+findElementInArray(array: ["5","2","3","6"], toFind: "5")
 
 /*:
  - Note:

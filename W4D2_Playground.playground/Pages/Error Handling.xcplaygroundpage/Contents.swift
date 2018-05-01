@@ -54,25 +54,64 @@ catch let error {
  - Experiment:
  Create a Human class that has a name and age property. Also, create an initializer for this class to set its initial properties.
  */
+class Human
+{
+    var name : String
+    var age : Int
+    
+    init(name:String,age:Int) throws
+    {
+        if(name == "")
+        {
+            throw HumanError.InvalidName
+        }
+        else
+        {
+            self.name = name;
+        }
+        
+        if(age == 0)
+        {
+           throw HumanError.InvalidAge
+        }
+        else
+        {
+        self.age = age;
+        }
+    }
+}
 
 
 /*:
  - Experiment:
  Create your own errors that throw when the name provided is empty or if the age is invalid. Go back and update the Human's initializer to throw an error when the data passed in is invalid.
  */
-
+enum HumanError: Error
+{
+    case InvalidName
+    case InvalidAge
+}
 
 /*:
  - Experiment:
  Now you can test your new Human class and surround it around the do-catch blocks.
  */
-
+do
+{
+let alex = try Human(name: " ", age: 0)
+    print("\(alex.name) is a valid Human")
+}
+catch let error
+{
+  print("An error is thrown: \(error)")
+}
 
 /*:
  - Experiment:
  Test your Human class again but don't surround it with a do-catch block and use `try?` instead. What do you notice? (What is the value of the new human when an error is thrown?)
  */
 
+let jim = try? Human(name: "jim", age: 23) //Its a optional human
 
 /*:
  - Experiment:
@@ -83,6 +122,15 @@ catch let error {
 let data = "{\"firstName\": \"Bob\", \"lastName\": \"Doe\", \"vehicles\": [\"car\", \"motorcycle\", \"train\"]}".data(using: .utf8)!
 
 
+let json = try? JSONSerialization.jsonObject(with: data, options: [])
+
+if let jsonDictionary = json as? [String:AnyObject]
+{
+    for value in jsonDictionary
+    {
+        print("\(value)")
+    }
+}
 /*:
  - Callout(Challenge):
  Going back to our challenge from "More Optionals", let's rewrite the form valiation but we will use throw errors to indicate which piece is missing. We want to write a function that validates form data filled in by a user. Once we encounter the first field that is blank, we want to throw an error indicating which field is empty. Otherwise, print out all the information.
@@ -102,6 +150,37 @@ let email: String? = "user1@lighthouselabs.ca"
 //let password: String? = nil
 //let email: String? = "user1@lighthouselabs.ca"
 
+enum ValidationError: Error
+{
+    case InvalidUsername
+    case InvalidPassword
+    case InvalidEmail
+}
+
+func validateUserInformation(user:String?,pass:String?,email:String?) throws
+{
+    guard let username = user else
+    {
+        print("Username field is blank")
+        throw ValidationError.InvalidUsername
+        return
+    }
+    guard let password = pass else
+    {
+        print("Password field is blank")
+         throw ValidationError.InvalidPassword
+        return
+    }
+    guard let e = email else
+    {
+        print("Email field is blank")
+         throw ValidationError.InvalidEmail
+        return
+    }
+    
+    print("Username: \(username), Password: \(pass), Email: \(email)")
+}
+
 
 /*:
  - Callout(Challenge):
@@ -111,13 +190,39 @@ let email: String? = "user1@lighthouselabs.ca"
  
  Throw an error if the model doesn't exist, insufficient amount of money was given, or the car is out of stock.
  */
+enum DealershipError: Error
+{
+    case InsufficientFunds
+    case InvalidModel
+    case OutOfStock
+}
+
+
 class HondaDealership{
   
   var availableCarSupply = ["Civic" : (price: 5000, count: 5),
                             "CRV" : (price: 7000, count: 9),
                             "Prelude" : (price: 9000, count: 2)]
   
-  
+  func sellCar(model: String, offeredPrice: Int) throws
+  {
+    
+   guard let car = availableCarSupply[model] else
+   {
+    throw DealershipError.InvalidModel
+    return
+   }
+    
+    if(availableCarSupply[model]!.price > offeredPrice)
+    {
+     throw DealershipError.InsufficientFunds
+    }
+    
+    if(availableCarSupply[model]!.count == 0)
+    {
+        throw DealershipError.OutOfStock
+    }
+  }
   
 }
 
