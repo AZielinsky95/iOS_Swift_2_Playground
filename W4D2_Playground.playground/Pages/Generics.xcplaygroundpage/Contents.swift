@@ -33,7 +33,13 @@ printMyTwoNumbers(num1: "three", num2: "four")
  - Experiment:
  Now you try! Write a generic function that takes in two parameters and multiply their value together and print the result. (Hint: You might run into an error after finishing. Continue to the next experiment to find out why!)
  */
-
+func multiplyTwoValues<Element>(item1: Element,item2:Element)
+{
+   // var result = item1 * item2;
+   // print("\(result)")
+    
+    //error!
+}
 
 /*:
  - Experiment:
@@ -42,6 +48,8 @@ printMyTwoNumbers(num1: "three", num2: "four")
 
 func multiply<Element: Numeric>(num1: Element, num2: Element) {
   
+    let result = num1 * num2;
+    print("\(result)")
 }
 
 
@@ -50,11 +58,30 @@ func multiply<Element: Numeric>(num1: Element, num2: Element) {
  Update your multiplication function and test it! Try using different variable types to see what works and what doesn't.
  */
 
+//multiply(num1: "Hi", num2: "hello") error
+
+multiply(num1: 50, num2: 50)
 
 /*:
  - Experiment:
  Write a generic function that takes in two parameters. One parameter is an array of elements, and the other is one element you are trying to find in the array. Return the index where the element exists in the array. ie: Given `[1,5,2,4]` and `'5'`, the returned index is `1`
  */
+
+func findElementInArray<Element:Comparable>(array: [Element],toFind:Element) -> Int?
+{
+    for i in 0..<array.count
+    {
+        if(array[i] == toFind)
+        {
+            return i;
+        }
+    }
+    
+    return nil
+}
+
+findElementInArray(array: [1,5,2,4], toFind: 5)
+
 /*:
  - Note:
  For this experiment, refrain from using the array method `indexOf`. Also the protocol `Equatable` might be useful here. Search it up to see what it's about.
@@ -75,6 +102,34 @@ func multiply<Element: Numeric>(num1: Element, num2: Element) {
  - dequeue: remove an item from the queue, and return the removed element
  */
 
+struct Queue<Element>
+{
+    var queuedItems = [Element]()
+    
+    mutating func enqueue (item: Element)
+    {
+        queuedItems.append(item)
+    }
+    
+    mutating func dequeue()
+    {
+        guard queuedItems.isEmpty else
+        {
+        queuedItems.removeFirst()
+        return
+        }
+        print("Queue is empty")
+    }
+    
+    init(items:[Element])
+    {
+        queuedItems = items
+    }
+}
+
+var queue = Queue(items: [1,2,3])
+queue.enqueue(item: 0)
+queue.dequeue()
 
 
 //: [Next](@next)

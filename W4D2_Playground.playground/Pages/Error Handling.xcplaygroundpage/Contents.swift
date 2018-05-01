@@ -10,7 +10,8 @@ import Foundation
 /*:
  Here we are defining our own 'Error' enum. 'Error' is a protocol part of the Apple framework. This is to indiciate a potential reason for an error to occur
  */
-enum DivideError: Error {
+enum DivideError: Error
+{
   case CannotDivideByZero
 }
 

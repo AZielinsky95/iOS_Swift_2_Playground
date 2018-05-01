@@ -9,7 +9,7 @@ import Foundation
 /*:
  Imagine we are rolling two six-sided dice. We can use a tuple to represent each of the dice values.
  */
-let diceRoll = (5, 6)
+let diceRoll = (4, 4)
 
 // Our switch statement looks for the cases where the total value of the dice rolled is 11
 switch diceRoll {
@@ -36,8 +36,9 @@ case (_, 1):
 case (2, _):
     print("2 on the first dice, and any on the second dice")
 case (1...3, 1...3):
-    print("any first dice roll , and 1 on the second dice")
+    print("both dice rolled in range of 1 - 3")
 case (let x, let y) where x == y:
+    print("both dice rolled the same")
 default:
     print("who cares")
 }
@@ -52,7 +53,21 @@ default:
  - Otherwise, indiciate the given day is not a holiday
  */
 
+let date = ("Dec",25)
 
+switch date
+{
+case ("Dec",25):
+    print("Christmas Day!");
+case ("Jan",1):
+    print("New Years Day!");
+case ("Feb",14):
+    print("Valentine's Day!");
+case ("Oct",31):
+    print("Halloween Day!");
+default:
+    print("No Holiday!")
+}
 /*:
  - Callout(Challenge):
  Take a look at the following X-Y Graph.
@@ -65,6 +80,20 @@ default:
  - point is inside the blue outlined box
  - point is outside the blue outlined box
  */
+
+let point = (1,1)
+
+switch point
+{
+case (_,0):
+    print("point is on x axis!")
+case (0,_):
+    print("point is on y axis!")
+case (-2...2,-2...2):
+    print("point is inside the blue box")
+default:
+    print("point is outside the blue box")
+}
 
 
 //: [Next](@next)
