@@ -29,7 +29,18 @@ default:
  - case (1...3, 1...3)
  - case (let x, let y) where x == y
  */
-
+switch diceRoll
+{
+case (_, 1):
+    print("any first dice roll , and 1 on the second dice")
+case (2, _):
+    print("2 on the first dice, and any on the second dice")
+case (1...3, 1...3):
+    print("any first dice roll , and 1 on the second dice")
+case (let x, let y) where x == y:
+default:
+    print("who cares")
+}
 
 /*:
  - Callout(Challenge):
